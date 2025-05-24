@@ -423,6 +423,32 @@ export default function LinkDetails({
 
           <div className="relative">
             <p className="text-sm mb-2 text-neutral relative w-fit flex justify-between">
+              {t("notes")}
+            </p>
+            {mode === "view" ? (
+              <div className="rounded-md p-2 bg-base-200 hyphens-auto">
+                {link.notes ? (
+                  <p>{link.notes}</p>
+                ) : (
+                  <p className="text-neutral">{t("no_notes_provided")}</p>
+                )}
+              </div>
+            ) : (
+              <textarea
+                value={unescapeString(link.notes || "")}
+                onChange={(e) =>
+                  setLink({ ...link, notes: e.target.value })
+                }
+                placeholder={t("link_notes_placeholder")}
+                className="resize-none w-full rounded-md p-2 h-32 border-neutral-content bg-base-200 focus:border-primary border-solid border outline-none duration-100"
+              />
+            )}
+          </div>
+
+          <br />
+
+          <div className="relative">
+            <p className="text-sm mb-2 text-neutral relative w-fit flex justify-between">
               {t("tags")}
             </p>
 

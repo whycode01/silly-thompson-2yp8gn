@@ -21,6 +21,7 @@ export default function NewLinkModal({ onClose }: Props) {
     name: "",
     url: "",
     description: "",
+    notes: "", // Added notes field
     type: "url",
     tags: [],
     collection: {
@@ -70,7 +71,7 @@ export default function NewLinkModal({ onClose }: Props) {
         ...initial,
         collection: { name: "Unorganized" },
       });
-  }, []);
+  }, []); // Removed collections from dependency array as initial is not dependent on it here
 
   const submit = async () => {
     if (!submitLoader) {
@@ -110,7 +111,7 @@ export default function NewLinkModal({ onClose }: Props) {
         </div>
         <div className="sm:col-span-2 col-span-5">
           <p className="mb-2">{t("collection")}</p>
-          {link.collection?.name && (
+          {link.collection?.name && ( // Ensure link.collection.name is available before rendering
             <CollectionSelection
               onChange={setCollection}
               defaultValue={{
@@ -152,6 +153,17 @@ export default function NewLinkModal({ onClose }: Props) {
                     setLink({ ...link, description: e.target.value })
                   }
                   placeholder={t("link_description_placeholder")}
+                  className="resize-none w-full h-32 rounded-md p-2 border-neutral-content bg-base-200 focus:border-primary border-solid border outline-none duration-100"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <p className="mb-2">{t("notes")}</p>
+                <textarea
+                  value={link.notes || ""}
+                  onChange={(e) =>
+                    setLink({ ...link, notes: e.target.value })
+                  }
+                  placeholder={t("link_notes_placeholder")}
                   className="resize-none w-full h-32 rounded-md p-2 border-neutral-content bg-base-200 focus:border-primary border-solid border outline-none duration-100"
                 />
               </div>
